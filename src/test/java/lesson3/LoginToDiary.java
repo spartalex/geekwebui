@@ -11,7 +11,7 @@ public class LoginToDiary {
         driver.get("https://diary.ru");
         Cookie sessionCookie = driver.manage().getCookieNamed("PHPSESSID");
         driver.manage().deleteCookie(sessionCookie);
-        Cookie cookie = new Cookie("PHPSESSID", "hiedlbq6q6dav3d2ih2e0bd4ft");
+        Cookie cookie = new Cookie("PHPSESSID", "ouj40tj14mt8009pj4cveqpsjc");
         driver.manage().addCookie(cookie);
         driver.navigate().refresh();
         Thread.sleep(50000);
