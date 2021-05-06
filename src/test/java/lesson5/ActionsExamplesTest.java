@@ -22,14 +22,12 @@ import org.testng.annotations.Test;
 import java.time.Duration;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.function.Function;
 
 import static lesson5.BackGroundColor.hasColor;
+import static lesson5.CustomExpectedConditions.elementFirstInCollection;
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static ru.yandex.qatools.htmlelements.matchers.WebElementMatchers.hasText;
-import static ru.yandex.qatools.htmlelements.matchers.WebElementMatchers.isDisplayed;
 
 public class ActionsExamplesTest {
     WebDriver driver;
@@ -70,13 +68,21 @@ public class ActionsExamplesTest {
                 .perform();
         //Thread.sleep(2000);//TODO:Заменить на нормальное ожидание
         Wait<WebDriver> wait = new FluentWait<>(driver)
-                .withTimeout(Duration.ofSeconds(5))//Всего ждем 5 секунд
-                .pollingEvery(Duration.ofMillis(50)); //Условие проверяем каждые 50 миллисекунд;
+                .withTimeout(Duration.ofSeconds(50))//Всего ждем 5 секунд
+                .pollingEvery(Duration.ofSeconds(5))
+                .ignoring(NoSuchElementException.class); //Условие проверяем каждые 50 миллисекунд;
 
         //Само условие - получаем список заголовков и получим true, когда на 1 месте будет ВЛАДЕЛЕЦ
         wait.until(driver -> driver.findElements(
                 By.xpath("//thead[@class='grid-header']//span[@class='grid-header-cell__label']")).get(0).getText()
                 .equals("ВЛАДЕЛЕЦ"));
+
+        webDriverWait.until(driver -> driver.findElements(
+                By.xpath("//thead[@class='grid-header']//span[@class='grid-header-cell__label']")).get(0).getText()
+                .equals("ВЛАДЕЛЕЦ"));
+
+        webDriverWait.until(elementFirstInCollection(
+                By.xpath("//thead[@class='grid-header']//span[@class='grid-header-cell__label']"), "ВЛАДЕЛЕЦ"));
 
         List<WebElement> headers = driver.findElements(
                 By.xpath("//thead[@class='grid-header']//span[@class='grid-header-cell__label']"));
