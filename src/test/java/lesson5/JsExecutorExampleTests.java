@@ -7,17 +7,21 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static lesson5.Helpers.clickWithJS;
 
 public class JsExecutorExampleTests {
     WebDriver driver;
     WebDriverWait webDriverWait;
-    private static final String BASE_URL = "https://afisha.ru/";
+    private static final String BASE_URL = "https://ya.ru/";
 
     @BeforeSuite
     void setupDataBase() {
@@ -39,16 +43,32 @@ public class JsExecutorExampleTests {
     @Test
     void jsExecuteTest() throws InterruptedException {
         JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
-        Thread.sleep(2000);
-        javascriptExecutor.executeScript("document.getElementById('ad__id_5').remove()");
-        Thread.sleep(2000);
 
-        clickWithJS(driver, driver.findElement(By.xpath("//a[text()='Войти']")));
+        clickWithJS(driver, driver.findElement(By.xpath("//button")));
         javascriptExecutor.executeScript("window.alert('Привет!')");
-        Thread.sleep(3000);
+        Thread.sleep(5000);
         Alert alert = driver.switchTo().alert();
         alert.accept();
 
         Thread.sleep(2000);
+
+        ((JavascriptExecutor) driver).executeScript("window.open()");
+
+        List<String> tabs = new ArrayList<>(driver.getWindowHandles());
+
+        Thread.sleep(3000);
+
+        driver.switchTo().window(tabs.get(0));
+
+        Thread.sleep(3000);
+
+        driver.close();// одну вкладку заркыть
+
+        Thread.sleep(5000);
+    }
+
+    @AfterMethod
+    void tearDown() {
+        driver.quit();
     }
 }

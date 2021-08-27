@@ -10,7 +10,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AssertJExamples {
+public class AssertJExamples { // надо подключить
     Functions functions = new Functions();
     @Test
     void testEvenNumber() {

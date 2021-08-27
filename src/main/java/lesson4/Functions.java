@@ -3,13 +3,13 @@ package lesson4;
 public class Functions {
     public boolean isNumberEven(Integer number) {
         return number % 2 == 0;
-    }
+    } //четное
 
     public boolean isNumberPositive(Integer number) {
         return number > 0;
     }
 
-    public boolean isPrime(Integer number) {
+    public boolean isPrime(Integer number) { //простое
         if (number < 0) {
             return false;
         } else if (number == 1) {

@@ -51,14 +51,11 @@ public class ActionsExamplesTest {
         driver.get(BASE_URL);
         login();
     }
-
+//https://crm.geekbrains.space/dashboard
     @Test(description = "Демонстация actions в crm", enabled = true)
     void dragAndDropTest() throws InterruptedException {
         Actions actions = new Actions(driver);
-        actions.moveToElement(driver.findElement(By.xpath("//i[@class='icon-bar-chart']//ancestor::span[@class]")))
-                .build()
-                .perform();
-        driver.findElement(By.xpath("//span[text()='Управение панелями инструментов']")).click();
+        driver.get("https://crm.geekbrains.space/dashboard");
         webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[@title='Настройки представления']")));
         driver.findElement(By.xpath("//a[@title='Настройки представления']")).click();
         actions.clickAndHold(driver.findElement(By.xpath("//label[text()='Наименование']//ancestor::tr//span[@title='Move column']")))
@@ -66,6 +63,7 @@ public class ActionsExamplesTest {
                         driver.findElement(By.xpath("//label[text()='Владелец']//ancestor::tr")))
                 .build()
                 .perform();
+        //https://crossbrowsertesting.github.io/drag-and-drop.html
         //Thread.sleep(2000);//TODO:Заменить на нормальное ожидание
         Wait<WebDriver> wait = new FluentWait<>(driver)
                 .withTimeout(Duration.ofSeconds(50))//Всего ждем 5 секунд
@@ -87,10 +85,11 @@ public class ActionsExamplesTest {
         List<WebElement> headers = driver.findElements(
                 By.xpath("//thead[@class='grid-header']//span[@class='grid-header-cell__label']"));
         assertThat(headers.get(0).getText(), containsString("ВЛАДЕЛЕЦ"));
-        assertThat(headers.get(0), hasText("ВЛАДЕЛЕЦ"));
+        assertThat(headers.get(0), hasText("ВЛАДЕЛЕЦ"));//нужно подключить расширение для хамкреста
         //assertThat(headers.get(0), not(isDisplayed()));
         Assert.assertTrue(headers.get(0).isDisplayed());
         Assert.assertEquals(headers.get(0).getText(), "ВЛАДЕЛЕЦ");
+
 
         String backGroundColorBefore = driver.findElement(By.xpath("//tbody[@class='grid-body']//tr[1]"))
                 .getCssValue("background-color");

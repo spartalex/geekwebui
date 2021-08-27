@@ -14,6 +14,7 @@ public class CrmTests {
     private static WebDriver driver;
     private static final String LOGIN_PAGE_URL = "https://crm.geekbrains.space/user/login";
 
+    //создать заявку на расход
     public static void main(String[] args) throws InterruptedException {
         WebDriverManager.chromedriver().setup();
 
@@ -39,6 +40,8 @@ public class CrmTests {
         expenceSelect.selectByVisibleText("01101 - ОС: вычислительная техника инфраструктуры");
 
         driver.findElement(By.name("crm_expense_request[sumPlan]")).sendKeys("123");
+
+        //Укаажите дату
         driver.findElement(By.xpath("//label[@class='required']//ancestor::div[contains(@class,'control')]" +
                 "//input[@placeholder='Укажите дату']")).click();
         //datepicker-input  hasDatepicker error
@@ -46,6 +49,8 @@ public class CrmTests {
 
         driver.findElement(By.xpath("//button[contains(text(),'Сохранить и закрыть')]")).click();
 
+        //так плохо-
+        //webDriverWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//*[text()='Заявка на расход сохранена']"))));
         webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[text()='Заявка на расход сохранена']")));
 
         driver.findElement(By.xpath("//*[text()='Заявка на расход сохранена']"));
